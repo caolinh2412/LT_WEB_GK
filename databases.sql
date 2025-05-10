@@ -8,6 +8,7 @@ CREATE TABLE users (
     password VARCHAR(255) NOT NULL,
     role ENUM('student', 'admin') NOT NULL,
     full_name VARCHAR(100) NOT NULL,
+    is_approved BOOLEAN DEFAULT FALSE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -60,8 +61,8 @@ CREATE TABLE visits (
 
 -- Thêm dữ liệu mẫu
 INSERT INTO users (username, password, role, full_name) VALUES
-('admin1', MD5('admin123'), 'admin', 'Giảng viên 1'),
-('student1', MD5('student123'), 'student', 'Sinh viên 1');
+('admin1', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'admin', 'Giảng viên 1'),
+('student1', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'student', 'Sinh viên 1');
 
 INSERT INTO subjects (subject_name, description) VALUES
 ('Lập trình PHP', 'Môn học về lập trình web với PHP'),

@@ -221,9 +221,6 @@ $layout = isset($_SESSION['layout']) ? $_SESSION['layout'] : 'default';
                 <a class="nav-link" href="manage_announcements.php">
                     <i class="fas fa-bullhorn"></i> Quản lý thông báo
                 </a>
-                <a class="nav-link" href="manage_texts.php">
-                    <i class="fas fa-edit"></i> Soạn văn bản
-                </a>
                 <a class="nav-link" href="statistics.php">
                     <i class="fas fa-chart-bar"></i> Thống kê
                 </a>
@@ -250,14 +247,14 @@ $layout = isset($_SESSION['layout']) ? $_SESSION['layout'] : 'default';
                 <a class="nav-link active" href="#">
                     <i class="fas fa-tachometer-alt"></i> <span>Dashboard</span>
                 </a>
+                <a class="nav-link" href="manage_users.php">
+                    <i class="fas fa-users"></i> <span>Quản lý tài khoản</span>
+                </a>
                 <a class="nav-link" href="manage_documents.php">
                     <i class="fas fa-file-alt"></i> <span>Quản lý tài liệu</span>
                 </a>
                 <a class="nav-link" href="manage_announcements.php">
                     <i class="fas fa-bullhorn"></i> <span>Quản lý thông báo</span>
-                </a>
-                <a class="nav-link" href="manage_texts.php">
-                    <i class="fas fa-edit"></i> <span>Soạn văn bản</span>
                 </a>
                 <a class="nav-link" href="statistics.php">
                     <i class="fas fa-chart-bar"></i> <span>Thống kê</span>
@@ -316,25 +313,19 @@ $layout = isset($_SESSION['layout']) ? $_SESSION['layout'] : 'default';
                 <div class="col-12">
                     <h2 class="section-title"><i class="fas fa-bolt me-2"></i>Thao tác nhanh</h2>
                     <div class="row">
-                        <div class="col-md-3 mb-3">
+                        <div class="col-md-4 mb-3">
                             <a href="manage_documents.php" class="card admin-card text-center p-3 text-decoration-none">
                                 <i class="fas fa-file-upload admin-icon"></i>
                                 <h5>Thêm tài liệu</h5>
                             </a>
                         </div>
-                        <div class="col-md-3 mb-3">
+                        <div class="col-md-4 mb-3">
                             <a href="manage_announcements.php" class="card admin-card text-center p-3 text-decoration-none">
                                 <i class="fas fa-plus-circle admin-icon"></i>
                                 <h5>Tạo thông báo</h5>
                             </a>
                         </div>
-                        <div class="col-md-3 mb-3">
-                            <a href="manage_texts.php" class="card admin-card text-center p-3 text-decoration-none">
-                                <i class="fas fa-edit admin-icon"></i>
-                                <h5>Soạn văn bản</h5>
-                            </a>
-                        </div>
-                        <div class="col-md-3 mb-3">
+                        <div class="col-md-4 mb-3">
                             <a href="statistics.php" class="card admin-card text-center p-3 text-decoration-none">
                                 <i class="fas fa-chart-line admin-icon"></i>
                                 <h5>Xem thống kê</h5>

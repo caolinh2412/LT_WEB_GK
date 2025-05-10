@@ -2,25 +2,35 @@
 session_start();
 require 'config.php';
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+$message = '';
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = $_POST['username'];
-    $password = md5($_POST['password']);
+    $password = md5($_POST['password']); // Mã hóa mật khẩu bằng MD5
 
     $stmt = $pdo->prepare("SELECT * FROM users WHERE username = ? AND password = ?");
     $stmt->execute([$username, $password]);
     $user = $stmt->fetch();
 
     if ($user) {
-        $_SESSION['user_id'] = $user['id'];
-        $_SESSION['role'] = $user['role'];
-        $_SESSION['full_name'] = $user['full_name'];
+        // Check if the student account is approved
+        if (!$user['is_approved'] && $user['role'] === 'student') {
+            $message = '<div class="alert alert-warning">Tài khoản của bạn đang chờ được duyệt. Vui lòng thử lại sau!</div>';
+        } else {
+            $_SESSION['user_id'] = $user['id'];
+            $_SESSION['role'] = $user['role'];
+            $_SESSION['username'] = $user['username'];
+            $_SESSION['full_name'] = $user['full_name'];
 
-        // Ghi lại lượt truy cập
-        $pdo->prepare("INSERT INTO visits (user_id) VALUES (?)")->execute([$user['id']]);
-
-        header("Location: dashboard.php");
+            if ($user['role'] === 'admin') {
+                header("Location: admin_dashboard.php");
+            } else {
+                header("Location: student_dashboard.php");
+            }
+            exit;
+        }
     } else {
-        $error = "Sai tên đăng nhập hoặc mật khẩu.";
+        $message = '<div class="alert alert-danger">Tên đăng nhập hoặc mật khẩu không đúng!</div>';
     }
 }
 ?>
@@ -91,6 +101,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             margin-bottom: 15px;
             text-align: center;
         }
+        .register-link {
+            text-align: center;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+        .register-link a {
+            color: var(--primary-blue);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        .register-link a:hover {
+            color: var(--hover-blue);
+        }
     </style>
 </head>
 <body>
@@ -101,9 +126,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             </div>
             <h2>Đăng nhập</h2>
         </div>
-        <?php if (isset($error)): ?>
-            <div class="error-message"><?php echo $error; ?></div>
-        <?php endif; ?>
+        <?php echo $message; ?>
         <form method="POST">
             <div class="mb-3">
                 <label class="form-label">Tên đăng nhập</label>
@@ -117,6 +140,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <i class="fas fa-sign-in-alt me-2"></i>Đăng nhập
             </button>
         </form>
+        <div class="register-link">
+            <p class="mb-0">Chưa có tài khoản? <a href="register.php"><i class="fas fa-user-plus me-1"></i>Đăng ký ngay</a></p>
+        </div>
     </div>
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
